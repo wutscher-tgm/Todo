@@ -1,12 +1,14 @@
 from flask import Flask
-app = Flask(__name__)
+from database import Database
 
+app = Flask(__name__)
+db = Database('db.json')
 """
 Todo-List Routes
 """
 @app.route("/list/", methods=['GET'])
-def getList(list):
-    return "Hello World!"
+def getList():
+    return db.getList()
 
 @app.route("/list/<list>/", methods=['POST'])
 def createList(list):
