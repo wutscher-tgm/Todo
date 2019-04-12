@@ -33,6 +33,8 @@ export default {
     addList(){
       axios.post('http://localhost:5000/list/', {
         title: this.listName
+      },{
+        'Content-Type': 'application/json'
       }).then(res=>{
         this.getLists()
       })

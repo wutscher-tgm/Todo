@@ -1,8 +1,7 @@
 <template>
   <div class="home">
-    <!--<Card msg="Welcome to Your Vue.js App"/>-->
-    <!--<textarea v-model="msg"/>-->    
-    asdasd
+    List: {{data}}
+    <Card v-for="(todo, index) in data.todos" v-bind:key="index" v-bind:data="todo"/>
   </div>
 </template>
 
@@ -13,6 +12,9 @@ import VueMarkdown from 'vue-markdown'
 
 export default {
   name: 'home',
+  props:[
+    'data'
+  ],
   data(){
     return {
       msg: "# Test"

@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    test
+    Item: {{data}}
   </div>
 </template>
 

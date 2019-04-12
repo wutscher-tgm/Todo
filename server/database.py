@@ -2,8 +2,8 @@ import json
 
 class Database:
     def __init__(self, path):
-        self.load(path)
-        pass
+        self.path = path
+        self.load()
 
     """
     Todo-List Functions
@@ -14,8 +14,9 @@ class Database:
 
     def addList(self, title):
         self.db.append({
-                "id": self.getId(),
-                "title": title
+                "id": self.getListId(),
+                "title": title,
+                "todos": []
             })
         self.save()
         return "success"
@@ -30,11 +31,18 @@ class Database:
     Todo-Item Functions
     """
 
-    def getItem(self):
-        pass
+    def getItem(self, listid):
+        for list in self.db:
+            if list['id'] == listid:
+                return list['todos']
 
-    def addItem(self):
-        pass
+    def addItem(self, listid, item):
+        for list in self.db:
+            if list['id'] == listid:
+                list['todos'].append({
+                    "title": item.title,
+                    "desc": item.desc
+                })
     
     def updateItem(self):
         pass
@@ -47,11 +55,16 @@ class Database:
     """
 
     def save(self):
-        pass
+        with open(self.path, "w+") as file:
+            file.write(json.dumps(self.db))
     
-    def load(self, path):
-        with open(path, "r+") as file:
+    def load(self):
+        with open(self.path, "r+") as file:
             self.db = json.loads(file.read())
     
-    def getId(self):
-        return 1
+    def getListId(self):
+        maxId = 0;
+        for list in self.db:
+            if list['id'] > maxId:
+                maxId = list['id']
+        return maxId+1
