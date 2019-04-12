@@ -1,18 +1,27 @@
-from flask import Flask
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 from database import Database
 
 app = Flask(__name__)
+CORS(app)
+
 db = Database('db.json')
+
+
+#parser = reqparse.RequestParser()
+#parser.add_argument('titel')
+#args = parser.parse_args()
+
 """
 Todo-List Routes
 """
-@app.route("/list/", methods=['GET'])
-def getList():
-    return db.getList()
 
-@app.route("/list/<list>/", methods=['POST'])
-def createList(list):
-    return list
+@app.route("/list/", methods=['GET', 'POST'])
+def list():
+    if request.method == 'GET':
+        return jsonify(db.getList())
+    else:
+        return db.addList(request.args.get('title'))
 
 @app.route("/list/<list>/", methods=['PUT'])
 def updateList(list):
@@ -32,7 +41,7 @@ def getItem(list):
     return list
 
 @app.route("/item/<list>/<item>/", methods=['POST'])
-def createItem(list, item):
+def addItem(list, item):
     return list+item
 
 @app.route("/item/<list>/<item>/", methods=['PUT'])

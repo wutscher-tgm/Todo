@@ -1,3 +1,4 @@
+import json
 
 class Database:
     def __init__(self, path):
@@ -11,12 +12,13 @@ class Database:
     def getList(self):
         return self.db
 
-    def addList(self):
-        self.db += [{
-                "id": "asd1232r3w",
-                "name": "name"
-            }]
+    def addList(self, title):
+        self.db.append({
+                "id": self.getId(),
+                "title": title
+            })
         self.save()
+        return "success"
     
     def updateList(self):
         pass
@@ -49,4 +51,7 @@ class Database:
     
     def load(self, path):
         with open(path, "r+") as file:
-            self.db = file.read()
+            self.db = json.loads(file.read())
+    
+    def getId(self):
+        return 1
