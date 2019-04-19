@@ -1,9 +1,12 @@
 <template>
-  <div class="home">
-    <List v-for="(list, index) in lists" v-bind:key="index" v-bind:data="list"/>
+  <div id="home">
     <div>
       <input type="text" v-model="listName">
       <input type="button" v-on:click="addList()" name="" id="">
+    </div>
+
+    <div class="columns scroll-x fullheight">
+      <List class="column" v-for="(list, index) in lists" v-bind:key="index" v-bind:data="list"/>
     </div>
   </div>
 </template>
@@ -45,3 +48,14 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.scroll-x{
+  overflow-x: scroll
+}
+.fullheight{
+  height: 100%;
+}
+#home{
+  height: 100%;
+}
+</style>

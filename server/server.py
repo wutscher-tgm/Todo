@@ -39,9 +39,9 @@ Todo-Item Routes
 @app.route("/item/<list>/", methods=['GET', 'POST'])
 def item(list):
     if request.method == 'GET':
-        return jsonify(db.getList(request.get_json()['list']))
+        return jsonify(list)
     else:
-        return db.addItem(request.get_json()['list'], request.get_json()['item'])
+        return db.addItem(list, request.get_json()['item'])
 
 @app.route("/item/<list>/<item>/", methods=['PUT'])
 def updateItem(list, item):

@@ -38,11 +38,13 @@ class Database:
 
     def addItem(self, listid, item):
         for list in self.db:
-            if list['id'] == listid:
+            if int(list['id']) == int(listid):
+                print('asdasdasd')
                 list['todos'].append({
-                    "title": item.title,
-                    "desc": item.desc
+                    "title": item['title'],
+                    "desc": item['desc']
                 })
+        return "success"
     
     def updateItem(self):
         pass
