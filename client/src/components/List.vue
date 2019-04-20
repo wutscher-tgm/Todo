@@ -1,16 +1,19 @@
 <template>
-  <div class="home">
+  <div class="todo-list">
     <!--List: {{data}}-->
     <div class="card">
-      <div class="card-content">
-        <p class="title">
+      <header class="card-header">
+        <p class="card-header-title is-size-3">
           {{data.title}}
         </p>
-        <p>
+        <a href="#" class="card-header-icon">
           <input type="button" class="button is-primary is-rounded" v-on:click="isCreating=true" value="Create New">
-          <Card v-for="(todo, index) in data.todos" v-bind:key="index" v-bind:data="todo" style="padding:10px"/>
-        </p>
-      </div>
+        </a>
+      </header>
+
+      <vue-custom-scrollbar class="scroll-area card-content">
+        <Card v-for="(todo, index) in data.todos" v-bind:key="index" v-bind:data="todo" style="padding:10px"/>
+      </vue-custom-scrollbar>
     </div>
 
     <div v-bind:class="{ 'is-active': isCreating, 'modal': true }">
@@ -61,8 +64,7 @@
 <script>
 import axios from 'axios'
 import Card from '@/components/Card.vue'
-import VueMarkdown from 'vue-markdown'
-//<vue-markdown v-bind:source="msg"></vue-markdown>
+import vueCustomScrollbar from 'vue-custom-scrollbar'
 
 export default {
   name: 'home',
@@ -79,7 +81,7 @@ export default {
     }
   },
   components: {
-    Card, VueMarkdown
+    Card, vueCustomScrollbar
   },
   methods:{
     addItem(){
@@ -91,9 +93,17 @@ export default {
       },{
         'Content-Type': 'application/json'
       }).then(res=>{
-        this.$parent.getLists()
+        this.$parent.$parent.getLists()
       })
     }
   }
 }
 </script>
+<style lang="scss" scoped>
+.scroll-area {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  height: 80%;
+}
+</style>

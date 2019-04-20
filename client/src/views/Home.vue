@@ -1,19 +1,19 @@
 <template>
-  <div id="home">
+  <div id="home" class="fullheight">
     <div>
       <input type="text" v-model="listName">
       <input type="button" v-on:click="addList()" name="" id="">
     </div>
-
-    <div class="columns scroll-x fullheight">
-      <List class="column" v-for="(list, index) in lists" v-bind:key="index" v-bind:data="list"/>
-    </div>
+    <vue-custom-scrollbar class="scroll-area columns">
+      <List class="column is-one-fifth tlist" v-for="(list, index) in lists" v-bind:key="index" v-bind:data="list"/>
+    </vue-custom-scrollbar>
   </div>
 </template>
 
 <script>
 import List from '@/components/List.vue'
 import axios from 'axios'
+import vueCustomScrollbar from 'vue-custom-scrollbar'
 
 export default {
   name: 'home',
@@ -25,7 +25,7 @@ export default {
     }
   },
   components: {
-    List
+    List, vueCustomScrollbar
   },
   methods:{
     getLists(){
@@ -49,13 +49,16 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.scroll-x{
-  overflow-x: scroll
+.scroll-area {
+  position: relative;
+  margin: auto;
+  width: 100vw;
+  height: 100%;
 }
 .fullheight{
   height: 100%;
 }
-#home{
-  height: 100%;
+.tlist{
+  height: 200px;
 }
 </style>
